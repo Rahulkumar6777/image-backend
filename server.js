@@ -9,7 +9,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // Frontend URL
+  origin: 'https://4kimage.netlify.app/', // Frontend URL
 }));
 app.use(express.json());
 
