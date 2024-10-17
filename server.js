@@ -8,9 +8,13 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: 'https://4kimage.netlify.app/', // Frontend URL
-}));
+const corsOptions ={
+  origin: 'https://4kimage.netlify.app',
+  methods: ['GET' , 'POST'],
+  allowedHeaders: ['Content-Type'],
+}
+
+app.use(cors(corsOptions))
 app.use(express.json());
 
 // Routes
