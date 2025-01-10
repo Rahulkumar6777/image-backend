@@ -1,4 +1,3 @@
-// backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -8,13 +7,26 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-const corsOptions = {
-  origin: 'https://4kimage.netlify.app', // Your frontend domain
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true, // Allow cookies if needed
+const corsOptions = (req, callback) => {
+  let corsOptions;
+  if (req.header('Origin') === 'https://4kimage.netlify.app') {
+    // Allow all methods for your frontend domain
+    corsOptions = {
+      origin: true,
+      methods: 'GET,POST,PUT,DELETE',
+      credentials: true,
+    };
+  } else {
+    // Allow only GET for other origins
+    corsOptions = {
+      origin: '*',
+      methods: 'GET',
+    };
+  }
+  callback(null, corsOptions);
 };
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
